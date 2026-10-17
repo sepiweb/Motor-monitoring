@@ -171,6 +171,10 @@ h1{font-size:1.2rem;text-align:right}
 .quick span{color:var(--mute);font-size:.78rem}
 .nudge{margin-bottom:14px;padding:10px 14px;border-radius:14px;font-weight:700;font-size:.9rem;background:color-mix(in srgb,var(--amber) 16%,transparent);border:1px solid color-mix(in srgb,var(--amber) 45%,transparent)}
 #spark{width:100%;height:auto;display:block;overflow:visible}
+.loginPrompt{display:flex;align-items:center;justify-content:space-between;gap:14px;border-color:color-mix(in srgb,var(--amber) 55%,transparent)}
+.loginPrompt[hidden]{display:none}
+.loginPrompt .btn{width:auto;margin:0;padding:12px 18px;white-space:nowrap}
+@media(max-width:640px){.loginPrompt{flex-direction:column;align-items:stretch;text-align:center}.loginPrompt .btn{width:100%}}
 </style>
 </head>
 <body class="boot">
@@ -185,6 +189,10 @@ h1{font-size:1.2rem;text-align:right}
 
   <div class="banner" id="banner" role="alert"></div>
   <div class="banner" id="gearBanner" role="alert"></div>
+  <section class="card loginPrompt" id="loginPrompt" hidden>
+    <div><b>وارد حساب خودت شو</b><div class="sub">تا اطلاعات موتور روی همه‌ی دستگاه‌ها ذخیره و همگام بماند.</div></div>
+    <button class="btn oil" id="goLogin" type="button">ورود / ساخت حساب</button>
+  </section>
 
   <section class="card bike" id="bikeCard" aria-label="وضعیت ظاهری موتور">
     <img id="bikeImg" alt="Galaxy R155 Aerox">
@@ -565,7 +573,7 @@ try{sess=JSON.parse(localStorage.getItem(KEY+'-sess'))}catch(e){}
 const pick=j=>({access_token:j.access_token,refresh_token:j.refresh_token,id:j.user&&j.user.id,email:j.user&&j.user.email});
 const stat=m=>{$('cStat').textContent=m};
 function setSess(x){sess=x;try{x?localStorage.setItem(KEY+'-sess',JSON.stringify(x)):localStorage.removeItem(KEY+'-sess')}catch(e){}cloudUI()}
-function cloudUI(){$('cloudOff').hidden=cloudOK;$('cloudIn').hidden=!cloudOK||!!sess;$('cloudOn').hidden=!sess;
+function cloudUI(){$('loginPrompt').hidden=!(cloudOK&&!sess);$('cloudOff').hidden=cloudOK;$('cloudIn').hidden=!cloudOK||!!sess;$('cloudOn').hidden=!sess;
   if(sess)$('cWho').textContent='واردشده با: '+(sess.email||'')}
 function raw(path,o,token){
   const h={apikey:C.key,'Content-Type':'application/json',...((o&&o.headers)||{})},tk=token||(C.key.startsWith('eyJ')?C.key:null);
@@ -619,6 +627,7 @@ $('cLogin').onclick=()=>auth('in');$('cSignup').onclick=()=>auth('up');
 $('cSync').onclick=pull;$('cOut').onclick=()=>{setSess(null);toast('خارج شدی؛ داده‌ها روی این دستگاه می‌مانند')};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
 addEventListener('online',()=>dirty?push():pull());
+$('goLogin').onclick=()=>{$('cloudCard').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('cEmail').focus(),500)};
 cloudUI();if(sess)pull();
 </script>
 </body>
