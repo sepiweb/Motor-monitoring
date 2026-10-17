@@ -618,24 +618,46 @@ async function push(){
     if(!r.ok)throw 0;dirty=false;stat('در ابر ذخیره شد ✓');
   }catch(e){dirty=true;stat('اتصال برقرار نشد؛ بعدا خودکار ارسال می‌شود.')}
 }
+const hasData=o=>!!o&&((o.odo||[]).length+(o.oil||[]).length+(o.gear||[]).length)>0;
+const blank=()=>({interval:1000,odo:[],oil:[],gear:[]});
+const uni=(a,b)=>[...new Map([...(a||[]),...(b||[])].map(x=>[x.id,x])).values()];
+const keepLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 async function pull(){
   if(!sess)return;stat('در حال همگام‌سازی…');
   try{
     const r=await authed('/rest/v1/panel?select=data&limit=1');if(!r.ok)throw 0;
-    const rows=await r.json(),rem=rows[0]&&rows[0].data;
-    if(rem&&(rem.ts||0)>(S.ts||0)){
-      S=Object.assign({interval:1000,odo:[],oil:[],gear:[]},rem);
-      try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
-      render();stat('آخرین اطلاعات از ابر آمد ✓');
-    }else if(!rem||dirty||(S.ts||0)>(rem.ts||0))await push();
-    else stat('همه‌چیز همگام است ✓');
+    const rows=await r.json(),rem=rows[0]&&rows[0].data,me=sess.id;
+    if(S.owner===me){
+      // داده‌ی این دستگاه متعلق به همین حساب است: جدیدتر برنده است
+      if(rem&&(rem.ts||0)>(S.ts||0)){S=Object.assign(blank(),rem,{owner:me});keepLocal();render();stat('آخرین اطلاعات از ابر آمد ✓')}
+      else if(!rem||dirty||(S.ts||0)>(rem.ts||0))await push();
+      else stat('همه‌چیز همگام است ✓');
+    }else{
+      // داده‌ی محلی به این حساب وصل نیست: هرگز روی ابر نمی‌نویسیم مگر ابر خالی باشد
+      const foreign=!!S.owner&&S.owner!==me;
+      if(hasData(rem)){
+        if(hasData(S)&&!foreign){
+          S={interval:rem.interval||S.interval,odo:uni(rem.odo,S.odo),oil:uni(rem.oil,S.oil),gear:uni(rem.gear,S.gear),ts:Date.now(),owner:me};
+          keepLocal();render();await push();toast('داده‌های این دستگاه با ابر ادغام شد');
+        }else{S=Object.assign(blank(),rem,{owner:me});keepLocal();render();stat('اطلاعات از ابر آمد ✓')}
+      }else{
+        if(foreign)S=blank();
+        S.owner=me;S.ts=Date.now();keepLocal();render();await push();
+      }
+    }
   }catch(e){stat('اتصال برقرار نشد؛ داده‌ها فعلا روی همین دستگاه ذخیره‌اند.')}
 }
 $('cLogin').onclick=()=>auth('in');$('cSignup').onclick=()=>auth('up');
-$('cSync').onclick=pull;$('cOut').onclick=()=>{setSess(null);toast('خارج شدی؛ داده‌ها روی این دستگاه می‌مانند')};
+$('cSync').onclick=pull;$('cOut').onclick=async()=>{
+  if(dirty){await push();if(dirty&&!confirm('بعضی تغییرات هنوز به ابر نرسیده و با خروج از بین می‌روند. خارج شوم؟'))return}
+  setSess(null);S=blank();keepLocal();dirty=false;
+  $('oilKm').value='';$('kmIn').value='';render();
+  toast('خارج شدی؛ داده‌ی این دستگاه پاک شد و در ابر سالم است');
+};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});
 addEventListener('online',()=>dirty?push():pull());
 $('goLogin').onclick=()=>{$('cloudCard').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('cEmail').focus(),500)};
+if(sess&&sess.id&&!S.owner&&(S.ts||hasData(S))){S.owner=sess.id;keepLocal()}
 cloudUI();if(sess)pull();
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
