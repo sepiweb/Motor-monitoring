@@ -183,6 +183,14 @@ h1{font-size:1.2rem;text-align:right}
 .loginPrompt[hidden]{display:none}
 .loginPrompt .btn{width:auto;margin:0;padding:12px 18px;white-space:nowrap}
 @media(max-width:640px){.loginPrompt{flex-direction:column;align-items:stretch;text-align:center}.loginPrompt .btn{width:100%}}
+.inwrap{position:relative}
+.inwrap input{padding-left:62px;font-variant-numeric:tabular-nums;font-weight:700}
+.inwrap.wide input{padding-left:82px}
+.inwrap em{position:absolute;left:14px;top:50%;translate:0 -50%;font-style:normal;font-weight:900;font-size:.76rem;letter-spacing:.08em;color:var(--mute);pointer-events:none}
+#onb{max-width:430px}
+#onb h3{font-size:1.15rem;font-weight:900;margin-bottom:6px;line-height:1.5}
+.onbStep{animation:rise .5s var(--ease) both}.onbStep[hidden]{display:none}
+#onb .tools .btn{min-width:0}#onb [hidden]{display:none!important}
 </style>
 </head>
 <body class="boot">
@@ -242,7 +250,7 @@ h1{font-size:1.2rem;text-align:right}
     <h2>ثبت کیلومتر امروز</h2>
     <div class="nudge" id="nudge" hidden></div>
     <div class="row">
-      <div class="field"><label for="kmIn">کیلومتر روی کیلومترشمار</label><input id="kmIn" type="number" inputmode="numeric" min="0" placeholder="مثلا 12450"></div>
+      <div class="field"><label for="kmIn">کیلومتر روی کیلومترشمار</label><div class="inwrap"><input id="kmIn" type="text" inputmode="numeric" data-num autocomplete="off" placeholder="مثلا ۱۲٬۴۵۰"><em>KM</em></div></div>
       <div class="field"><label id="kmDateL">تاریخ</label><div class="jdate" id="kmDate" role="group" aria-labelledby="kmDateL"></div></div>
     </div>
     <div class="quick" id="quick"><button type="button" data-n="10">+۱۰</button><button type="button" data-n="50">+۵۰</button><button type="button" data-n="100">+۱۰۰</button><span>به کیلومتر فعلی اضافه کن</span></div>
@@ -253,9 +261,10 @@ h1{font-size:1.2rem;text-align:right}
   <section class="card">
     <h2>تعویض روغن</h2>
     <div class="row">
-      <div class="field"><label for="oilKm">کیلومتر هنگام تعویض</label><input id="oilKm" type="number" inputmode="numeric" min="0"></div>
+      <div class="field"><label for="oilKm">کیلومتر هنگام تعویض</label><div class="inwrap"><input id="oilKm" type="text" inputmode="numeric" data-num autocomplete="off"><em>KM</em></div></div>
       <div class="field"><label id="oilDateL">تاریخ</label><div class="jdate" id="oilDate" role="group" aria-labelledby="oilDateL"></div></div>
     </div>
+    <div class="field" style="margin-top:12px"><label for="oilCost">هزینه (اختیاری)</label><div class="inwrap wide"><input id="oilCost" type="text" inputmode="numeric" data-num autocomplete="off" placeholder="مثلا ۴۵۰٬۰۰۰"><em>تومان</em></div></div>
     <div class="err" id="oilErr"></div>
     <button class="btn oil" id="saveOil">روغن را عوض کردم</button>
   </section>
@@ -264,6 +273,7 @@ h1{font-size:1.2rem;text-align:right}
     <h2>روغن گیربکس</h2>
     <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i></div>
     <p class="sub" id="gearTxt"></p>
+    <div class="field" style="margin-top:12px"><label for="gearCost">هزینه (اختیاری)</label><div class="inwrap wide"><input id="gearCost" type="text" inputmode="numeric" data-num autocomplete="off" placeholder="مثلا ۴۵۰٬۰۰۰"><em>تومان</em></div></div>
     <div class="err" id="gearErr"></div>
     <button class="btn ghost" id="saveGear" style="margin-top:6px">روغن گیربکس را عوض کردم</button>
     <ul id="gearList" style="margin-top:12px"></ul>
@@ -273,6 +283,16 @@ h1{font-size:1.2rem;text-align:right}
     <section class="card"><h2>سابقه تعویض روغن</h2><ul id="oilList"></ul></section>
     <section class="card"><h2>سابقه کیلومتر</h2><ul id="kmList"></ul></section>
   </div>
+
+  <section class="card" id="costCard">
+    <h2>هزینه‌ها</h2>
+    <div class="stats">
+      <div class="stat"><b id="cMonth">—</b><span>این ماه</span></div>
+      <div class="stat"><b id="cYear">—</b><span>امسال</span></div>
+      <div class="stat"><b id="cAll">—</b><span>مجموع کل</span></div>
+    </div>
+    <p class="sub" id="cNote" style="margin-top:12px"></p>
+  </section>
 
   <section class="card" id="cloudCard">
     <h2>همگام‌سازی ابری</h2>
@@ -295,10 +315,11 @@ h1{font-size:1.2rem;text-align:right}
 
   <section class="card">
     <h2>تنظیمات و پشتیبان</h2>
-    <div class="field" style="margin-bottom:14px"><label for="interval">هر چند کیلومتر روغن عوض شود؟</label><input id="interval" type="number" inputmode="numeric" min="100" step="100"></div>
+    <div class="field" style="margin-bottom:14px"><label for="interval">هر چند کیلومتر روغن عوض شود؟</label><div class="inwrap"><input id="interval" type="text" inputmode="numeric" data-num autocomplete="off"><em>KM</em></div></div>
     <div class="tools">
       <button class="btn ghost" id="exportBtn">دانلود پشتیبان</button>
       <button class="btn ghost" id="importBtn">بازگردانی پشتیبان</button>
+      <button class="btn ghost" id="guideBtn" type="button">نمایش راهنمای شروع</button>
     </div>
     <input id="file" type="file" accept="application/json" hidden>
     <p class="sub" style="margin-top:12px">داده‌ها فقط در همین مرورگر ذخیره می‌شوند. برای انتقال به گوشی یا مرورگر دیگر، پشتیبان بگیر.</p>
@@ -307,6 +328,29 @@ h1{font-size:1.2rem;text-align:right}
 
 <dialog id="dlg"><p id="dlgMsg"></p>
   <div class="tools"><button class="btn ghost" id="dlgNo">انصراف</button><button class="btn" id="dlgYes" style="margin-top:0">حذف</button></div>
+</dialog>
+<dialog id="onb" aria-labelledby="onbT">
+  <div class="dots" id="onbDots" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="onbStep">
+    <h3 id="onbT">خوش اومدی! بیا موتورت رو تنظیم کنیم</h3>
+    <p class="sub">فقط سه سؤال کوتاه. اول، عدد روی کیلومترشمار الان چنده؟</p>
+    <div class="field" style="margin-top:14px"><label for="onbKm">کیلومتر فعلی</label><div class="inwrap"><input id="onbKm" type="text" inputmode="numeric" data-num autocomplete="off" placeholder="مثلا ۱۲٬۴۵۰"><em>KM</em></div></div>
+  </div>
+  <div class="onbStep">
+    <h3>آخرین بار کِی روغن عوض کردی؟</h3>
+    <p class="sub">کیلومتر هنگام آخرین تعویض را بنویس. اگه یادت نیست، خالی بگذار؛ بعداً از بخش «تعویض روغن» ثبتش کن.</p>
+    <div class="field" style="margin-top:14px"><label for="onbOil">کیلومتر آخرین تعویض روغن</label><div class="inwrap"><input id="onbOil" type="text" inputmode="numeric" data-num autocomplete="off"><em>KM</em></div></div>
+    <div class="field" style="margin-top:12px"><label for="onbWhen">تقریبا چه زمانی؟</label><select id="onbWhen"><option value="0">امروز</option><option value="7">حدود یک هفته پیش</option><option value="30">حدود یک ماه پیش</option><option value="60">حدود دو ماه پیش یا بیشتر</option></select></div>
+  </div>
+  <div class="onbStep">
+    <h3>هر چند کیلومتر روغن عوض می‌کنی؟</h3>
+    <p class="sub">با این عدد هشدار تعویض را برایت حساب می‌کنم. معمولا بین ۱٬۰۰۰ تا ۳٬۰۰۰ کیلومتر.</p>
+    <div class="quick" id="onbChips"><button type="button" data-v="1000">۱٬۰۰۰</button><button type="button" data-v="1500">۱٬۵۰۰</button><button type="button" data-v="2000">۲٬۰۰۰</button><button type="button" data-v="3000">۳٬۰۰۰</button></div>
+    <div class="field" style="margin-top:14px"><label for="onbInt">بازه‌ی تعویض روغن</label><div class="inwrap"><input id="onbInt" type="text" inputmode="numeric" data-num autocomplete="off"><em>KM</em></div></div>
+  </div>
+  <div class="err" id="onbErr"></div>
+  <div class="tools" style="margin-top:6px"><button class="btn ghost" id="onbBack" type="button">قبلی</button><button class="btn oil" id="onbNext" type="button" style="margin-top:0">بعدی</button></div>
+  <button class="link" id="onbSkip" type="button" style="display:block;margin:10px auto 0">فعلا رد کن</button>
 </dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -383,7 +427,7 @@ function render(){
     const days=Math.max(1,(new Date(s.at(-1).date)-new Date(s[0].date))/864e5);
     avg=(s.at(-1).km-s[0].km)/days;
   }
-  $('avg').textContent=avg?fa.format(Math.round(avg))+' km':'—';
+  $('avg').textContent=avg?fa.format(Math.round(avg))+' KM':'—';
 
   const bar=$('bar'), st=$('state'), sub=$('stateSub'), ban=$('banner');
   ban.className='banner';
@@ -408,7 +452,7 @@ function render(){
       st.textContent=cls==='warn'?'نزدیک تعویض':'وضعیت روغن خوب است';
       sub.textContent=`${fa.format(left)} کیلومتر تا تعویض بعدی (در ${fa.format(oil.km+I)}).`;
       if(cls==='warn'){ban.className='banner show warn';ban.textContent=`⚠️ فقط ${fa.format(left)} کیلومتر تا تعویض روغن مانده.`}
-      $('eta').textContent=avg?'~'+fa.format(Math.ceil(left/avg))+' روز':fa.format(left)+' km';
+      $('eta').textContent=avg?'~'+fa.format(Math.ceil(left/avg))+' روز':fa.format(left)+' KM';
     }
   }
   const sinceNow=oil?Math.max(0,(km??oil.km)-oil.km):0, r=sinceNow/I;
@@ -418,10 +462,10 @@ function render(){
   document.querySelectorAll('#dots i').forEach((x,i)=>x.classList.toggle('on',i<gn));
   if(gn>=3){gb.className='banner show warn';gb.textContent=`🛢️ ${fa.format(gn)} بار روغن موتور عوض کرده‌ای؛ وقت تعویض روغن گیربکس هم رسیده است.`;
     $('gearTxt').textContent='روغن گیربکس را عوض کن و بعد دکمه‌ی زیر را بزن تا شمارش از اول شروع شود.'}
-  else{gb.className='banner';$('gearTxt').textContent=`${fa.format(gn)} از ${fa.format(3)} تعویض روغن موتور از آخرین تعویض گیربکس گذشته.`+(lg?` آخرین تعویض گیربکس: ${fa.format(lg.km)} km، ${fmtDate(lg.date)}.`:'')}
+  else{gb.className='banner';$('gearTxt').textContent=`${fa.format(gn)} از ${fa.format(3)} تعویض روغن موتور از آخرین تعویض گیربکس گذشته.`+(lg?` آخرین تعویض گیربکس: ${fa.format(lg.km)} KM، ${fmtDate(lg.date)}.`:'')}
   list('gearList',S.gear,'gear','هنوز تعویض گیربکسی ثبت نشده.');
-  $('interval').value=I;
-  if(km!=null&&!$('oilKm').value)$('oilKm').value=km;
+  setNum($('interval'),I);
+  if(km!=null&&!$('oilKm').value)setNum($('oilKm'),km);
   list('kmList',S.odo,'odo','هنوز کیلومتری ثبت نشده.');
   list('oilList',S.oil,'oil','هنوز تعویضی ثبت نشده.');extras();
 }
@@ -431,7 +475,7 @@ function list(id,arr,type,emptyMsg){
   if(!arr.length){el.innerHTML=`<div class="empty">${emptyMsg}</div>`;return}
   [...arr].sort((a,b)=>b.date.localeCompare(a.date)||b.km-a.km).slice(0,30).forEach(x=>{
     const li=document.createElement('li');
-    li.innerHTML=`<div><div class="km">${fa.format(x.km)} km</div><div class="d">${fmtDate(x.date)}</div></div>`;
+    li.innerHTML=`<div><div class="km">${fa.format(x.km)} KM</div><div class="d">${fmtDate(x.date)}${x.cost?` | ${fa.format(x.cost)} تومان`:''}</div></div>`;
     const b=document.createElement('button');b.textContent='✕';b.setAttribute('aria-label','حذف');
     b.onclick=()=>confirmDel(()=>{S[type]=S[type].filter(y=>y.id!==x.id);save();render()});
     li.append(b);el.append(li);
@@ -446,7 +490,7 @@ function confirmDel(fn){
 }
 
 function readForm(kmId,dateId,errId){
-  const km=parseInt($(kmId).value,10), date=jdGet(dateId), err=$(errId);
+  const km=getNum($(kmId)), date=jdGet(dateId), err=$(errId);
   err.textContent='';
   if(!Number.isFinite(km)||km<0){err.textContent='یک عدد معتبر برای کیلومتر وارد کن.';return null}
   if(!date){err.textContent='تاریخ را انتخاب کن.';return null}
@@ -462,18 +506,18 @@ $('saveKm').onclick=()=>{
 $('saveOil').onclick=()=>{
   const v=readForm('oilKm','oilDate','oilErr'); if(!v)return;
   const cur=curKm();
-  S.oil.push({id:uid(),...v});
+  S.oil.push({id:uid(),...v,cost:getNum($('oilCost'))||0});
   if(cur==null||v.km>cur)S.odo.push({id:uid(),...v});
-  save();render();$('oilDate')._set(true);toast('تعویض روغن ثبت شد');
+  save();render();$('oilDate')._set(true);$('oilCost').value='';toast('تعویض روغن ثبت شد');
 };
 $('saveGear').onclick=()=>{
-  const km=curKm()??parseInt($('oilKm').value,10);
+  const km=curKm()??getNum($('oilKm'));
   if(!Number.isFinite(km)){$('gearErr').textContent='اول کیلومتر فعلی را ثبت کن.';return}
   $('gearErr').textContent='';
-  S.gear.push({id:uid(),km,date:jdGet('oilDate')});save();render();$('oilDate')._set(true);toast('تعویض گیربکس ثبت شد');
+  S.gear.push({id:uid(),km,date:jdGet('oilDate'),cost:getNum($('gearCost'))||0});save();render();$('oilDate')._set(true);$('gearCost').value='';toast('تعویض گیربکس ثبت شد');
 };
 $('interval').onchange=e=>{
-  const n=parseInt(e.target.value,10);
+  const n=getNum(e.target);
   if(n>=100){S.interval=n;save()}
   render();
 };
@@ -543,9 +587,9 @@ function dayTick(){const t=todayISO();if(t===_day)return;_day=t;
 setInterval(dayTick,30000);addEventListener('focus',dayTick);document.addEventListener('visibilitychange',dayTick);
 
 document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>{
-  const base=parseInt($('kmIn').value,10);$('kmIn').value=(Number.isFinite(base)?base:(curKm()||0))+ +b.dataset.n;$('kmIn').focus()});
+  const base=getNum($('kmIn'));setNum($('kmIn'),(Number.isFinite(base)?base:(curKm()||0))+ +b.dataset.n);$('kmIn').focus()});
 
-function extras(){
+function extras(){costs();
   const t=todayISO(),I=S.interval,km=curKm(),oil=lastOil();
   const s=[...S.odo].sort((a,b)=>a.date.localeCompare(b.date)||a.km-b.km),last=s.at(-1);
   const nd=$('nudge');nd.hidden=!(s.length&&!s.some(x=>x.date===t));
@@ -554,7 +598,7 @@ function extras(){
   let wk='—',fc='—',ld='—';
   if(last){
     const lim=day(t);lim.setUTCDate(lim.getUTCDate()-7);const li=lim.toISOString().slice(0,10);
-    const base=[...s].reverse().find(x=>x.date<=li)||s[0];wk=fa.format(last.km-base.km)+' km';
+    const base=[...s].reverse().find(x=>x.date<=li)||s[0];wk=fa.format(last.km-base.km)+' KM';
     const n=Math.round((day(t)-day(last.date))/864e5);ld=n<=0?'امروز':n===1?'دیروز':fa.format(n)+' روز پیش';
     if(oil&&s.length>1){
       const days=Math.max(1,(day(last.date)-day(s[0].date))/864e5),avg=(last.km-s[0].km)/days,left=I-Math.max(0,km-oil.km);
@@ -646,6 +690,7 @@ async function pull(){
       }
     }
   }catch(e){stat('اتصال برقرار نشد؛ داده‌ها فعلا روی همین دستگاه ذخیره‌اند.')}
+maybeOnboard();
 }
 $('cLogin').onclick=()=>auth('in');$('cSignup').onclick=()=>auth('up');
 $('cSync').onclick=pull;$('cOut').onclick=async()=>{
@@ -659,6 +704,58 @@ addEventListener('online',()=>dirty?push():pull());
 $('goLogin').onclick=()=>{$('cloudCard').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('cEmail').focus(),500)};
 if(sess&&sess.id&&!S.owner&&(S.ts||hasData(S))){S.owner=sess.id;keepLocal()}
 cloudUI();if(sess)pull();
+
+// ---- v3: digit grouping, costs, first-run guide ----
+function toEn(t){return String(t).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-1776).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632)}
+function getNum(el){const d=toEn(el.value).replace(/\D/g,'').slice(0,10);return d?parseInt(d,10):NaN}
+function setNum(el,n){el.value=Number.isFinite(n)?fa.format(n):''}
+function fmtLive(el){
+  const pos=el.selectionStart??el.value.length,before=toEn(el.value.slice(0,pos)).replace(/\D/g,'').length,n=getNum(el);
+  setNum(el,n);if(!Number.isFinite(n))return;
+  let c=0,i=0;const v=el.value;for(;i<v.length&&c<before;i++)if(/[۰-۹]/.test(v[i]))c++;
+  try{el.setSelectionRange(i,i)}catch(e){}
+}
+document.querySelectorAll('[data-num]').forEach(el=>el.addEventListener('input',()=>fmtLive(el)));
+setNum($('interval'),S.interval);
+
+function costs(){
+  const t=todayISO().split('-').map(Number),tj=g2j(...t);let mo=0,yr=0,all=0,n=0;
+  [...S.oil,...S.gear].forEach(x=>{const c=x.cost||0;if(!c)return;all+=c;n++;
+    const j=g2j(...x.date.split('-').map(Number));if(j[0]===tj[0]){yr+=c;if(j[1]===tj[1])mo+=c}});
+  const f=v=>fa.format(v)+' تومان';
+  $('cMonth').textContent=f(mo);$('cYear').textContent=f(yr);$('cAll').textContent=f(all);
+  $('cNote').textContent=n?`میانگین هر سرویس: ${f(Math.round(all/n))}`:'هزینه‌ی هر تعویض را موقع ثبت بنویس تا اینجا جمع بزنم.';
+}
+
+const daysAgo=n=>{const d=new Date(todayISO()+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-n);return d.toISOString().slice(0,10)};
+let onbI=0;
+function onbShow(i){onbI=i;
+  document.querySelectorAll('#onb .onbStep').forEach((e,k)=>e.hidden=k!==i);
+  document.querySelectorAll('#onbDots i').forEach((e,k)=>e.classList.toggle('on',k<=i));
+  $('onbBack').hidden=i===0;$('onbNext').textContent=i===2?'شروع کن':'بعدی';$('onbErr').textContent='';
+  if(i===2&&!$('onbInt').value)setNum($('onbInt'),S.interval||1000);
+  setTimeout(()=>{const f=document.querySelector('#onb .onbStep:not([hidden]) input');f&&f.focus()},120)}
+function maybeOnboard(){
+  try{if(localStorage.getItem(KEY+'-onb'))return}catch(e){}
+  if(hasData(S)||document.querySelector('dialog[open]'))return;
+  onbShow(0);$('onb').showModal()}
+$('guideBtn').onclick=()=>{onbShow(0);$('onb').showModal()};
+$('onb').addEventListener('close',()=>{try{localStorage.setItem(KEY+'-onb','1')}catch(e){}});
+$('onbSkip').onclick=()=>$('onb').close();
+$('onbBack').onclick=()=>onbShow(onbI-1);
+document.querySelectorAll('#onbChips button').forEach(b=>b.onclick=()=>setNum($('onbInt'),+b.dataset.v));
+$('onbNext').onclick=()=>{
+  const er=$('onbErr');er.textContent='';
+  const km=getNum($('onbKm')),oil=getNum($('onbOil')),I=getNum($('onbInt'));
+  if(onbI===0){if(!Number.isFinite(km)){er.textContent='کیلومتر فعلی را وارد کن.';return}onbShow(1);return}
+  if(onbI===1){if(Number.isFinite(oil)&&oil>km){er.textContent='کیلومتر تعویض نمی‌تواند از کیلومتر فعلی بیشتر باشد.';return}onbShow(2);return}
+  if(!(I>=100)){er.textContent='بازه را حداقل ۱۰۰ کیلومتر بگذار.';return}
+  S.interval=I;S.odo.push({id:uid(),km,date:todayISO()});
+  if(Number.isFinite(oil))S.oil.push({id:uid(),km:oil,date:daysAgo(+$('onbWhen').value),cost:0});
+  save();render();$('onb').close();toast('همه‌چیز آماده است ✓');
+};
+if(!cloudOK)setTimeout(maybeOnboard,900);
+extras();
 
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
