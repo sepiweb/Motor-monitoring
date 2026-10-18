@@ -344,6 +344,50 @@ html[data-theme="light"] .empty{color:#68677e!important}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 
+
+/* ===== daily km chart ===== */
+.chhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.chtitle{font-weight:900;font-size:1.05rem}
+.cbtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;padding:0}
+.cbtn:disabled{opacity:.3;cursor:default}
+.cbtn:not(:disabled):active{transform:scale(.92)}
+.dayinfo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:18px;margin-bottom:18px;
+ border:1px solid color-mix(in srgb,var(--stage) 40%,var(--line));background:color-mix(in srgb,var(--stage) 9%,transparent)}
+.dayinfo b{display:block;font-weight:900}
+.dayinfo span{display:block;color:var(--mute);font-size:.8rem;line-height:1.6}
+.dayinfo strong{font-size:1.7rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+#dayCard .plot{position:relative;height:230px;padding-left:38px;margin-bottom:4px}
+.gl{position:absolute;left:38px;right:0;top:0;bottom:20px;display:flex;flex-direction:column-reverse;justify-content:space-between;pointer-events:none}
+.gl div{height:0;border-top:1px dashed var(--line);position:relative}
+.gl div:first-child{border-top-style:solid}
+.gl div::before{content:attr(data-v);position:absolute;left:-40px;top:-10px;width:33px;text-align:right;font-size:.66rem;color:var(--mute);font-variant-numeric:tabular-nums}
+.cols{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px;height:100%}
+.col{border:0;background:none;padding:0;min-width:0;cursor:pointer;display:grid;grid-template-rows:1fr 20px;border-radius:8px;color:var(--mute);font:inherit}
+.col:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.col.sel{background:color-mix(in srgb,var(--stage) 16%,transparent)}
+.col:focus-visible{outline:2px solid var(--amber)}
+.col .f{align-self:end;height:var(--h);width:100%;border-radius:6px 6px 2px 2px;transform-origin:bottom}
+.col u{text-decoration:none;font-size:.62rem;text-align:center;align-self:end;line-height:20px;visibility:hidden;font-variant-numeric:tabular-nums}
+.col u.lb,.col.sel u{visibility:visible}
+.col.sel u,.col.today u{color:var(--ink);font-weight:900}
+.t-ride .f{min-height:4px;background:linear-gradient(to top,color-mix(in srgb,var(--stage) 38%,transparent),var(--stage))}
+.t-span .f{min-height:4px;background:repeating-linear-gradient(135deg,var(--stage) 0 4px,color-mix(in srgb,var(--stage) 30%,transparent) 4px 8px)}
+.t-rest .f{height:5px;border-radius:3px;background:var(--mute);opacity:.6}
+.t-base .f{height:8px;width:8px;justify-self:center;border-radius:50%;border:2px solid var(--stage)}
+.t-none .f,.t-future .f{height:2px;border-radius:2px;background:var(--line)}
+.t-future .f{opacity:.4}
+.col.best .f{box-shadow:0 0 14px -2px var(--stage)}
+html[data-theme="light"] .t-ride .f,html[data-theme="light"] .t-span .f{box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.cols.anim .f{animation:grow .8s var(--ease) both;animation-delay:calc(var(--i)*16ms)}
+@keyframes grow{from{transform:scaleY(0);opacity:0}}
+.chempty{position:absolute;inset:0 0 20px 38px;display:grid;place-items:center;text-align:center;color:var(--mute);font-size:.85rem;pointer-events:none;padding:0 20px}
+.chempty[hidden]{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.74rem;color:var(--mute);margin:10px 0 16px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+.lg-r{background:var(--stage)}
+.lg-s{background:repeating-linear-gradient(135deg,var(--stage) 0 3px,color-mix(in srgb,var(--stage) 30%,transparent) 3px 6px)}
+.lg-z{background:var(--mute);opacity:.6;height:4px!important;vertical-align:2px!important}
+@media(max-width:640px){#dayCard .plot{height:200px}.cols{gap:2px}}
 </style>
 </head>
 <body class="boot">
@@ -399,6 +443,28 @@ html[data-theme="light"] .empty{color:#68677e!important}
     </div>
   </section>
 
+  <section class="card" id="dayCard">
+    <h2>کارکرد روزانه</h2>
+    <div class="chhead">
+      <button class="cbtn" id="chPrev" type="button" aria-label="ماه قبل">›</button>
+      <div class="chtitle" id="chTitle"></div>
+      <button class="cbtn" id="chNext" type="button" aria-label="ماه بعد">‹</button>
+    </div>
+    <div class="dayinfo" id="chInfo"><div><b id="diDate"></b><span id="diSub"></span></div><strong id="diVal"></strong></div>
+    <div class="plot">
+      <div class="gl" id="chGrid" aria-hidden="true"></div>
+      <div class="cols" id="chCols" role="list"></div>
+      <div class="chempty" id="chEmpty" hidden>با ثبت کیلومتر هر روز، نمودار اینجا ساخته می‌شود</div>
+    </div>
+    <div class="legend"><span><i class="lg-r"></i>روز رانندگی</span><span><i class="lg-s"></i>مجموع چند روز</span><span><i class="lg-z"></i>موتور روشن نشد</span></div>
+    <div class="stats">
+      <div class="stat"><b id="chTot">—</b><span>مجموع این ماه</span></div>
+      <div class="stat"><b id="chAvg">—</b><span>میانگین روزانه</span></div>
+      <div class="stat"><b id="chRest">—</b><span>روز بدون استفاده</span></div>
+    </div>
+    <p class="sub" id="chBest" style="margin-top:12px"></p>
+  </section>
+
   <section class="card">
     <h2>ثبت کیلومتر امروز</h2>
     <div class="nudge" id="nudge" hidden></div>
@@ -409,6 +475,7 @@ html[data-theme="light"] .empty{color:#68677e!important}
     <div class="quick" id="quick"><button type="button" data-n="10">+۱۰</button><button type="button" data-n="50">+۵۰</button><button type="button" data-n="100">+۱۰۰</button><span>به کیلومتر فعلی اضافه کن</span></div>
     <div class="err" id="kmErr"></div>
     <button class="btn" id="saveKm">ثبت کیلومتر</button>
+    <button class="btn ghost" id="saveRest" type="button" style="margin-top:10px">این روز موتور را روشن نکردم</button>
   </section>
 
   <section class="card">
@@ -562,6 +629,74 @@ function setStage(n){
   if(first)swap();else{img.classList.add('out');setTimeout(swap,250)}
 }
 
+// ---- daily km chart ----
+const dDiff=(a,b)=>Math.round((new Date(b+'T00:00:00Z')-new Date(a+'T00:00:00Z'))/864e5);
+function dailyMap(){
+  const by=new Map();
+  S.odo.forEach(x=>{const e=by.get(x.date);if(e)e.end=Math.max(e.end,x.km);else by.set(x.date,{end:x.km})});
+  const out=new Map();let prev=null;
+  [...by.keys()].sort().forEach(date=>{const end=by.get(date).end;
+    out.set(date,prev?{dist:end-prev.end,start:prev.end,end,gap:dDiff(prev.date,date)}:{dist:0,start:end,end,gap:1,base:true});
+    prev={date,end}});
+  return out;
+}
+function niceTop(m){if(m<=0)return 40;const raw=m/4,mag=Math.pow(10,Math.floor(Math.log10(raw)));return [1,2,2.5,5,10].map(x=>x*mag).find(x=>x>=raw)*4}
+let chJ=null,chSel=null,chAnim=true,chRows=[];
+function dayText(x){const f=v=>fa.format(v);
+  if(x.ty==='ride')return{v:f(x.r.dist)+' KM',s:`کیلومترشمار: ${f(x.r.start)} ← ${f(x.r.end)}`};
+  if(x.ty==='span')return{v:f(x.r.dist)+' KM',s:`مجموع ${f(x.r.gap)} روز؛ روزهای قبلش ثبت نشده بود`};
+  if(x.ty==='rest')return{v:'۰ KM',s:'موتور روشن نشد'};
+  if(x.ty==='base')return{v:'—',s:'اولین ثبت؛ از اینجا به بعد مسافت حساب می‌شود'};
+  if(x.ty==='future')return{v:'—',s:'این روز هنوز نرسیده'};
+  return{v:'—',s:'برای این روز کیلومتری ثبت نشده'}}
+function showDay(){
+  const x=chRows.find(r=>r.d===chSel);if(!x)return;
+  const wd=new Intl.DateTimeFormat('fa-IR',{weekday:'long',timeZone:'UTC'}).format(new Date(x.iso+'T00:00:00Z')),t=dayText(x);
+  $('diDate').textContent=`${wd} ${fn.format(x.d)} ${MONTHS[chJ[1]-1]}`;$('diSub').textContent=t.s;$('diVal').textContent=t.v;
+  document.querySelectorAll('#chCols .col').forEach(b=>b.classList.toggle('sel',+b.dataset.d===chSel));
+}
+function chart(){
+  const t=todayISO(),tj=g2j(...t.split('-').map(Number));
+  if(!chJ)chJ=[tj[0],tj[1]];
+  const [jy,jm]=chJ,n=dim(jy,jm),M=dailyMap(),rows=[];
+  let total=0,cov=0,rest=0,best=null,mx=0;
+  for(let d=1;d<=n;d++){
+    const g=j2g(jy,jm,d),iso=`${g[0]}-${pad(g[1])}-${pad(g[2])}`,r=M.get(iso);let ty='none';
+    if(iso>t)ty='future';
+    else if(r){ty=r.base?'base':r.dist===0?'rest':r.gap>1?'span':'ride';
+      if(!r.base){total+=r.dist;cov+=r.gap;mx=Math.max(mx,r.dist);if(ty==='rest')rest++;
+        if(ty==='ride'&&(!best||r.dist>best.dist))best={d,dist:r.dist}}}
+    rows.push({d,iso,r,ty});
+  }
+  chRows=rows;
+  const top=niceTop(mx),step=top/4;
+  $('chGrid').innerHTML=[0,1,2,3,4].map(k=>`<div data-v="${fa.format(step*k)}"></div>`).join('');
+  const cols=$('chCols');cols.style.setProperty('--n',n);cols.className='cols'+(chAnim?' anim':'');
+  cols.innerHTML=rows.map((x,i)=>{
+    const h=x.ty==='ride'||x.ty==='span'?Math.max(2,x.r.dist/top*100):0;
+    const lb=x.d===1||x.d===n||(x.d%5===0&&n-x.d>=2);
+    return `<button type="button" class="col t-${x.ty}${best&&x.ty==='ride'&&x.d===best.d?' best':''}${x.iso===t?' today':''}" data-d="${x.d}" style="--h:${h}%;--i:${i}" aria-label="${fn.format(x.d)} ${MONTHS[jm-1]}: ${dayText(x).v}"><i class="f"></i><u${lb?' class="lb"':''}>${fn.format(x.d)}</u></button>`}).join('');
+  if(chAnim)setTimeout(()=>{chAnim=false;cols.classList.remove('anim')},1300);
+  if(chSel==null||chSel>n){
+    const cur=jy===tj[0]&&jm===tj[1],tr=cur&&rows[tj[2]-1];
+    const lastData=[...rows].reverse().find(x=>x.r);
+    chSel=cur?(tr&&tr.r?tj[2]:(lastData?lastData.d:tj[2])):(lastData?lastData.d:1);
+  }
+  showDay();
+  $('chTitle').textContent=`${MONTHS[jm-1]} ${fn.format(jy)}`;
+  $('chEmpty').hidden=!!S.odo.length;
+  $('chTot').textContent=fa.format(total)+' KM';
+  $('chAvg').textContent=cov?fa.format(Math.round(total/cov))+' KM':'—';
+  $('chRest').textContent=fa.format(rest)+' روز';
+  $('chBest').textContent=best?`بیشترین مسافت یک روزه: ${fn.format(best.d)} ${MONTHS[jm-1]} با ${fa.format(best.dist)} KM`:(S.odo.length?'برای این ماه هنوز مسافت روزانه‌ای ثبت نشده.':'');
+  const first=S.odo.length?S.odo.map(x=>x.date).sort()[0]:t,fj=g2j(...first.split('-').map(Number));
+  $('chPrev').disabled=jy*12+jm<=fj[0]*12+fj[1];
+  $('chNext').disabled=jy*12+jm>=tj[0]*12+tj[1];
+}
+function chMove(k){let[y,m]=chJ;m+=k;if(m<1){m=12;y--}if(m>12){m=1;y++}chJ=[y,m];chSel=null;chAnim=true;chart()}
+$('chPrev').onclick=()=>chMove(-1);$('chNext').onclick=()=>chMove(1);
+$('chCols').addEventListener('click',e=>{const b=e.target.closest('.col');if(b){chSel=+b.dataset.d;showDay()}});
+
 let S={interval:1000,odo:[],oil:[],gear:[]};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
 const save=()=>{S.ts=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}schedPush()};
@@ -628,7 +763,7 @@ function list(id,arr,type,emptyMsg){
   if(!arr.length){el.innerHTML=`<div class="empty">${emptyMsg}</div>`;return}
   [...arr].sort((a,b)=>b.date.localeCompare(a.date)||b.km-a.km).slice(0,30).forEach(x=>{
     const li=document.createElement('li');
-    li.innerHTML=`<div><div class="km">${fa.format(x.km)} KM</div><div class="d">${fmtDate(x.date)}${x.cost?` | ${fa.format(x.cost)} تومان`:''}</div></div>`;
+    li.innerHTML=`<div><div class="km">${x.rest?'موتور روشن نشد':fa.format(x.km)+' KM'}</div><div class="d">${fmtDate(x.date)}${x.rest?` | ${fa.format(x.km)} KM`:''}${x.cost?` | ${fa.format(x.cost)} تومان`:''}</div></div>`;
     const b=document.createElement('button');b.textContent='✕';b.setAttribute('aria-label','حذف');
     b.onclick=()=>confirmDel(()=>{S[type]=S[type].filter(y=>y.id!==x.id);save();render()});
     li.append(b);el.append(li);
@@ -652,9 +787,18 @@ function readForm(kmId,dateId,errId){
 
 $('saveKm').onclick=()=>{
   const v=readForm('kmIn','kmDate','kmErr'); if(!v)return;
-  const cur=curKm();
-  if(cur!=null&&v.km<cur){$('kmErr').textContent=`کیلومتر نمی‌تواند کمتر از مقدار قبلی (${fa.format(cur)}) باشد.`;return}
+  const lo=Math.max(0,...S.odo.filter(x=>x.date<=v.date).map(x=>x.km)),hi=Math.min(Infinity,...S.odo.filter(x=>x.date>v.date).map(x=>x.km));
+  if(v.km<lo){$('kmErr').textContent=`کیلومتر نمی‌تواند کمتر از مقدار ثبت‌شده‌ی قبلی (${fa.format(lo)}) باشد.`;return}
+  if(v.km>hi){$('kmErr').textContent=`کیلومتر نمی‌تواند از مقدار روزهای بعد (${fa.format(hi)}) بیشتر باشد.`;return}
   S.odo.push({id:uid(),...v});save();$('kmIn').value='';render();$('kmDate')._set(true);toast('کیلومتر ثبت شد');
+};
+$('saveRest').onclick=()=>{
+  const date=jdGet('kmDate'),err=$('kmErr');err.textContent='';
+  if(!S.odo.length){err.textContent='اول یک بار کیلومتر فعلی را ثبت کن.';return}
+  if(S.odo.some(x=>x.date===date)){err.textContent='برای این روز قبلا کیلومتر ثبت شده است.';return}
+  const base=S.odo.filter(x=>x.date<=date);
+  if(!base.length){err.textContent='این تاریخ قبل از اولین ثبت توست.';return}
+  S.odo.push({id:uid(),km:Math.max(...base.map(x=>x.km)),date,rest:true});save();render();$('kmDate')._set(true);toast('روز بدون استفاده ثبت شد');
 };
 $('saveOil').onclick=()=>{
   const v=readForm('oilKm','oilDate','oilErr'); if(!v)return;
@@ -744,11 +888,11 @@ setInterval(dayTick,30000);addEventListener('focus',dayTick);document.addEventLi
 document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>{
   const base=getNum($('kmIn'));setNum($('kmIn'),(Number.isFinite(base)?base:(curKm()||0))+ +b.dataset.n);$('kmIn').focus()});
 
-function extras(){costs();
+function extras(){costs();chart();
   const t=todayISO(),I=S.interval,km=curKm(),oil=lastOil();
   const s=[...S.odo].sort((a,b)=>a.date.localeCompare(b.date)||a.km-b.km),last=s.at(-1);
   const nd=$('nudge');nd.hidden=!(s.length&&!s.some(x=>x.date===t));
-  nd.textContent='امروز هنوز کیلومتر ثبت نکرده‌ای. عدد کیلومترشمار را بنویس و ثبت کن.';
+  nd.textContent='امروز هنوز کیلومتر ثبت نکرده‌ای. عدد کیلومترشمار را بنویس و ثبت کن؛ اگر موتور را روشن نکردی، دکمه‌ی «روشن نکردم» را بزن.';
   const day=iso=>new Date(iso+'T00:00:00Z');
   let wk='—',fc='—',ld='—';
   if(last){
