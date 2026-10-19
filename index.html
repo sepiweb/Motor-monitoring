@@ -49,7 +49,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:6px
 h1{font-size:1.3rem;font-weight:900;line-height:1.2}
 .today{font-size:.82rem;color:var(--mute)}
 .icon-btn{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:44px;height:44px;cursor:pointer;font-size:1.15rem;backdrop-filter:blur(14px);transition:transform .35s var(--ease),border-color .2s}
-.icon-btn:hover{border-color:var(--stage)}
+@media(hover:hover){.icon-btn:hover{border-color:var(--stage)}}
 .icon-btn:active{transform:rotate(180deg) scale(.92)}
 
 .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;
@@ -112,12 +112,12 @@ h1{font-size:1.3rem;font-weight:900;line-height:1.2}
 .err{color:var(--bad);font-size:.85rem;min-height:1.3em;margin-top:6px;font-weight:700}
 .btn{position:relative;overflow:hidden;width:100%;padding:14px;border:0;border-radius:14px;font-weight:900;cursor:pointer;background:var(--ink);color:var(--bg);margin-top:8px;transition:transform .2s var(--ease),box-shadow .3s}
 .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);translate:-120% 0;transition:translate .7s var(--ease)}
-.btn:hover::after{translate:120% 0}
-.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px var(--ink)}
+@media(hover:hover){.btn:hover::after{translate:120% 0}}
+@media(hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px var(--ink)}}
 .btn:active{transform:scale(.97)}
 .btn.oil{background:linear-gradient(135deg,#f7c548,var(--amber) 55%,#d98a00);color:#2a1d00;box-shadow:0 12px 28px -12px var(--amber)}
 .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);margin-top:0;box-shadow:none}
-.btn.ghost:hover{border-color:var(--ink)}
+@media(hover:hover){.btn.ghost:hover{border-color:var(--ink)}}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .jdate{display:grid;grid-template-columns:.8fr 1.3fr 1fr;gap:6px}
 .jdate select{padding:13px 6px 13px 18px;font-size:.98rem;min-width:0;background-position:left 5px center}
@@ -137,7 +137,7 @@ li:first-child::after{top:50%}li:last-child::after{bottom:50%}li:only-child::aft
 li .km{font-weight:900}
 li .d{color:var(--mute);font-size:.82rem}
 li button{background:none;border:1px solid transparent;color:var(--mute);cursor:pointer;font-size:.9rem;width:32px;height:32px;border-radius:10px;transition:.2s}
-li button:hover{color:var(--bad);border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+@media(hover:hover){li button:hover{color:var(--bad);border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}}
 .empty{color:var(--mute);font-size:.9rem;padding:8px 0}
 .tools{display:flex;gap:10px;flex-wrap:wrap}
 .tools .btn{flex:1;min-width:140px}
@@ -171,10 +171,10 @@ h1{font-size:1.2rem;text-align:right}
 .tchip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;font-weight:700;font-size:.92rem;background:color-mix(in srgb,var(--stage) 16%,transparent);border:1.5px solid color-mix(in srgb,var(--stage) 45%,transparent)}
 .tchip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--stage)}
 .link{background:none;border:0;cursor:pointer;color:var(--mute);font-size:.82rem;text-decoration:underline;text-underline-offset:4px;padding:8px 4px}
-.link:hover{color:var(--ink)}
+@media(hover:hover){.link:hover{color:var(--ink)}}
 .quick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
 .quick button{border:1.5px solid var(--line);background:var(--field);border-radius:99px;padding:5px 14px;font-weight:900;cursor:pointer;transition:.2s var(--ease)}
-.quick button:hover{border-color:var(--stage);transform:translateY(-2px)}
+@media(hover:hover){.quick button:hover{border-color:var(--stage);transform:translateY(-2px)}}
 .quick button:active{transform:scale(.94)}
 .quick span{color:var(--mute);font-size:.78rem}
 .nudge{margin-bottom:14px;padding:10px 14px;border-radius:14px;font-weight:700;font-size:.9rem;background:color-mix(in srgb,var(--amber) 16%,transparent);border:1px solid color-mix(in srgb,var(--amber) 45%,transparent)}
@@ -216,21 +216,21 @@ main{max-width:1040px;gap:20px;z-index:1}
 header{padding:8px 4px 14px;position:relative}
 .brand{gap:14px}
 .logo{width:54px;height:54px;border-radius:19px;color:#111506;background:linear-gradient(145deg,#e8ff9e,#c6ff3d 55%,#8bd900);box-shadow:0 0 0 1px rgba(198,255,61,.4),0 10px 38px -10px rgba(198,255,61,.6),inset 0 1px 0 #fff;transform:rotate(-5deg);transition:transform .5s var(--ease),box-shadow .5s}
-.logo:hover{transform:rotate(5deg) scale(1.06)}
+@media(hover:hover){.logo:hover{transform:rotate(5deg) scale(1.06)}}
 h1{font-size:clamp(1.15rem,3vw,1.65rem);font-weight:950;letter-spacing:-.05em}
 .today{font-size:.8rem;letter-spacing:.02em}
 .live{background:var(--stage);box-shadow:0 0 16px var(--stage)}
 .icon-btn{background:rgba(25,25,44,.72);border-color:var(--line);border-radius:17px;backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);transition:all .35s var(--ease)}
-.icon-btn:hover{transform:translateY(-3px) rotate(5deg);border-color:var(--stage);box-shadow:0 12px 30px -14px var(--stage)}
+@media(hover:hover){.icon-btn:hover{transform:translateY(-3px) rotate(5deg);border-color:var(--stage);box-shadow:0 12px 30px -14px var(--stage)}}
 .card{border-radius:var(--r);padding:clamp(18px,3vw,30px);background:linear-gradient(145deg,rgba(25,25,46,.88),rgba(13,14,25,.82));border:1px solid rgba(181,164,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 70px -40px #000,0 0 0 1px rgba(255,255,255,.015);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);transition:transform .45s var(--ease),border-color .4s,box-shadow .4s}
-.card:hover{border-color:rgba(198,255,61,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 28px 80px -38px #000,0 0 35px -25px rgba(198,255,61,.35)}
+@media(hover:hover){.card:hover{border-color:rgba(198,255,61,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 28px 80px -38px #000,0 0 35px -25px rgba(198,255,61,.35)}}
 h2{font-size:1.12rem;letter-spacing:-.035em;gap:12px;margin-bottom:18px}
 h2::before{width:5px;height:23px;border-radius:8px;background:var(--stage);box-shadow:0 0 18px rgba(198,255,61,.75)}
 .bike{min-height:320px;border-radius:22px;background:radial-gradient(ellipse at 50% 54%,rgba(117,76,255,.18),transparent 55%),linear-gradient(135deg,rgba(255,255,255,.025),transparent 60%);border:1px solid rgba(255,255,255,.045);padding:24px 20px 20px}
 .bike::before{width:62%;background:radial-gradient(closest-side,rgba(198,255,61,.2),rgba(115,80,255,.12) 48%,transparent);filter:blur(22px);animation:breathe 4.8s ease-in-out infinite}
 .bike::after{bottom:48px;width:48%;height:28px;background:radial-gradient(closest-side,rgba(117,76,255,.35),transparent);filter:blur(12px)}
 .bike img{max-width:510px;filter:drop-shadow(0 26px 28px rgba(0,0,0,.48)) drop-shadow(0 0 18px rgba(198,255,61,.08));transition:transform .5s var(--ease),filter .5s,opacity .25s}
-.bike:hover img{transform:translateY(-5px) scale(1.025) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));filter:drop-shadow(0 30px 34px rgba(0,0,0,.55)) drop-shadow(0 0 25px rgba(198,255,61,.18))}
+@media(hover:hover){.bike:hover img{transform:translateY(-5px) scale(1.025) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));filter:drop-shadow(0 30px 34px rgba(0,0,0,.55)) drop-shadow(0 0 25px rgba(198,255,61,.18))}}
 .chip{background:rgba(198,255,61,.08);border-color:rgba(198,255,61,.24);color:var(--ink);backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
 .chip i{background:var(--stage);box-shadow:0 0 0 4px rgba(198,255,61,.1),0 0 18px var(--stage)}
 .hero{grid-template-columns:minmax(230px,310px) 1fr;gap:clamp(24px,5vw,54px)}
@@ -245,23 +245,23 @@ h2::before{width:5px;height:23px;border-radius:8px;background:var(--stage);box-s
 .sub{font-size:.98rem;line-height:1.9}
 .stats{gap:12px;margin-top:24px}
 .stat{padding:16px 15px 13px;border-radius:19px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));border-color:rgba(255,255,255,.07);transition:transform .35s var(--ease),border-color .35s,background .35s}
-.stat:hover{transform:translateY(-4px);border-color:rgba(198,255,61,.28);background:rgba(198,255,61,.045)}
+@media(hover:hover){.stat:hover{transform:translateY(-4px);border-color:rgba(198,255,61,.28);background:rgba(198,255,61,.045)}}
 .stat::before{height:2px;background:linear-gradient(90deg,var(--stage),#8d6bff);opacity:1}
 .stat b{font-size:clamp(1rem,2.3vw,1.3rem);letter-spacing:-.035em}
 .stat span{font-size:.8rem}
 .row{gap:14px}
 .field label{font-size:.87rem;color:var(--mute)}
 .field input,.field select{padding:14px 15px;border-radius:16px;background:rgba(7,8,16,.52);border:1px solid rgba(181,164,255,.2);font-size:1.02rem;transition:border-color .25s,box-shadow .25s,background .25s}
-.field input:hover,.field select:hover{border-color:rgba(181,164,255,.45)}
+@media(hover:hover){.field input:hover,.field select:hover{border-color:rgba(181,164,255,.45)}}
 .field input:focus,.field select:focus{border-color:var(--stage);background:rgba(7,8,16,.78);box-shadow:0 0 0 4px rgba(198,255,61,.09),0 0 25px -12px var(--stage)}
 .btn{border-radius:16px;padding:15px 18px;font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,#e3e0ff,#b9b2ff);color:#171329;box-shadow:0 8px 24px -18px #b8aaff;transition:transform .3s var(--ease),box-shadow .3s,filter .3s}
-.btn:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(185,178,255,.65);filter:saturate(1.15)}
+@media(hover:hover){.btn:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(185,178,255,.65);filter:saturate(1.15)}}
 .btn:active{transform:scale(.98)}
 .btn.oil{background:linear-gradient(115deg,#e5ff9e,#c6ff3d 52%,#8fe000);color:#172000;box-shadow:0 12px 30px -16px rgba(198,255,61,.75)}
 .btn.ghost{background:rgba(255,255,255,.025);border:1px solid var(--line);color:var(--ink);box-shadow:none}
-.btn.ghost:hover{border-color:rgba(198,255,61,.45);background:rgba(198,255,61,.045);box-shadow:0 12px 30px -20px var(--stage)}
+@media(hover:hover){.btn.ghost:hover{border-color:rgba(198,255,61,.45);background:rgba(198,255,61,.045);box-shadow:0 12px 30px -20px var(--stage)}}
 .quick button{background:rgba(255,255,255,.035);border-color:var(--line);transition:all .3s var(--ease)}
-.quick button:hover{border-color:var(--stage);background:rgba(198,255,61,.08);box-shadow:0 8px 20px -15px var(--stage)}
+@media(hover:hover){.quick button:hover{border-color:var(--stage);background:rgba(198,255,61,.08);box-shadow:0 8px 20px -15px var(--stage)}}
 .tchip{background:rgba(198,255,61,.08);border-color:rgba(198,255,61,.22)}
 .nudge{background:rgba(255,189,89,.08);border-color:rgba(255,189,89,.24)}
 li{padding-block:13px}
@@ -298,15 +298,15 @@ body{background-size:100% 100%,100% 100%,100% 100%,auto;animation:neonDrift 18s 
 html{scroll-behavior:auto}
 /* The image itself is left untouched: no scaling, blur, color filters or lossy effects. */
 .bike img{display:block;width:100%;max-width:510px;height:auto;object-fit:contain;filter:none!important;transform:none!important;image-rendering:auto;backface-visibility:visible;transition:none!important}
-.bike:hover img{filter:none!important;transform:none!important}
+@media(hover:hover){.bike:hover img{filter:none!important;transform:none!important}}
 /* Avoid expensive fixed compositing layers and continuous animated backgrounds. */
 body{background-attachment:scroll!important;animation:none!important}
 body::after{display:none!important}
 .bike::before,.bike::after{animation:none!important;filter:none!important}
 .card,.icon-btn,.chip,.field input,.field select,.btn,.quick button,.stat{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transition:background-color .16s,border-color .16s,color .16s!important}
 .card{box-shadow:0 8px 24px rgba(0,0,0,.12)!important}
-.card:hover{transform:none!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important}
-.btn:hover,.stat:hover,.icon-btn:hover{transform:none!important;filter:none!important}
+@media(hover:hover){.card:hover{transform:none!important;box-shadow:0 8px 24px rgba(0,0,0,.12)!important}}
+@media(hover:hover){.btn:hover,.stat:hover,.icon-btn:hover{transform:none!important;filter:none!important}}
 .gauge,.gauge .bar,#needle circle,#spark{filter:none!important}
 html[data-theme="light"]{color-scheme:light}
 html[data-theme="light"] body{
@@ -346,48 +346,65 @@ html[data-theme="light"] .empty{color:#68677e!important}
 
 
 /* ===== daily km chart ===== */
-.chhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.chhead{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:10px;margin-bottom:14px;text-align:center}
 .chtitle{font-weight:900;font-size:1.05rem}
-.cbtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;padding:0}
+.cbtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);cursor:pointer;padding:0}
+.cbtn svg{display:block;width:20px;height:20px;margin:0 auto;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .cbtn:disabled{opacity:.3;cursor:default}
 .cbtn:not(:disabled):active{transform:scale(.92)}
-.dayinfo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:18px;margin-bottom:18px;
+.dayinfo{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:76px;padding:12px 16px;border-radius:18px;margin-bottom:18px;
  border:1px solid color-mix(in srgb,var(--stage) 40%,var(--line));background:color-mix(in srgb,var(--stage) 9%,transparent)}
+.dayinfo>div{min-width:0}
 .dayinfo b{display:block;font-weight:900}
 .dayinfo span{display:block;color:var(--mute);font-size:.8rem;line-height:1.6}
-.dayinfo strong{font-size:1.7rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
-#dayCard .plot{position:relative;height:230px;padding-left:38px;margin-bottom:4px}
-.gl{position:absolute;left:38px;right:0;top:0;bottom:20px;display:flex;flex-direction:column-reverse;justify-content:space-between;pointer-events:none}
+.dayinfo strong{font-size:1.6rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+#dayCard .plot{position:relative;height:240px;padding:10px 0 0 40px;margin-bottom:6px}
+.gl{position:absolute;left:40px;right:0;top:10px;bottom:22px;display:flex;flex-direction:column-reverse;justify-content:space-between;pointer-events:none}
 .gl div{height:0;border-top:1px dashed var(--line);position:relative}
 .gl div:first-child{border-top-style:solid}
-.gl div::before{content:attr(data-v);position:absolute;left:-40px;top:-10px;width:33px;text-align:right;font-size:.66rem;color:var(--mute);font-variant-numeric:tabular-nums}
-.cols{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px;height:100%}
-.col{border:0;background:none;padding:0;min-width:0;cursor:pointer;display:grid;grid-template-rows:1fr 20px;border-radius:8px;color:var(--mute);font:inherit}
-.col:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.gl div::before{content:attr(data-v);position:absolute;left:-40px;top:-10px;width:33px;text-align:right;font-size:.66rem;line-height:20px;color:var(--mute);font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px;height:100%}
+.col{position:relative;display:block;cursor:pointer;border-radius:8px;outline:none}
+.col:focus-visible{box-shadow:0 0 0 2px var(--amber)}
 .col.sel{background:color-mix(in srgb,var(--stage) 16%,transparent)}
-.col:focus-visible{outline:2px solid var(--amber)}
-.col .f{align-self:end;height:var(--h);width:100%;border-radius:6px 6px 2px 2px;transform-origin:bottom}
-.col u{text-decoration:none;font-size:.62rem;text-align:center;align-self:end;line-height:20px;visibility:hidden;font-variant-numeric:tabular-nums}
-.col u.lb,.col.sel u{visibility:visible}
+.col.today{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--stage) 55%,transparent)}
+.col .f{position:absolute;left:14%;right:14%;bottom:22px;height:calc((100% - 22px)*var(--p,0));transform-origin:bottom;border-radius:5px 5px 2px 2px}
+.col u{position:absolute;left:0;right:0;bottom:0;height:22px;line-height:22px;text-align:center;text-decoration:none;white-space:nowrap;font-size:.62rem;color:var(--mute);visibility:hidden;font-variant-numeric:tabular-nums}
+.col u.lb{visibility:visible}
 .col.sel u,.col.today u{color:var(--ink);font-weight:900}
 .t-ride .f{min-height:4px;background:linear-gradient(to top,color-mix(in srgb,var(--stage) 38%,transparent),var(--stage))}
 .t-span .f{min-height:4px;background:repeating-linear-gradient(135deg,var(--stage) 0 4px,color-mix(in srgb,var(--stage) 30%,transparent) 4px 8px)}
 .t-rest .f{height:5px;border-radius:3px;background:var(--mute);opacity:.6}
-.t-base .f{height:8px;width:8px;justify-self:center;border-radius:50%;border:2px solid var(--stage)}
+.t-base .f{left:50%;right:auto;width:8px;height:8px;margin-left:-4px;bottom:25px;border-radius:50%;border:2px solid var(--stage)}
 .t-none .f,.t-future .f{height:2px;border-radius:2px;background:var(--line)}
 .t-future .f{opacity:.4}
 .col.best .f{box-shadow:0 0 14px -2px var(--stage)}
 html[data-theme="light"] .t-ride .f,html[data-theme="light"] .t-span .f{box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
 .cols.anim .f{animation:grow .8s var(--ease) both;animation-delay:calc(var(--i)*16ms)}
 @keyframes grow{from{transform:scaleY(0);opacity:0}}
-.chempty{position:absolute;inset:0 0 20px 38px;display:grid;place-items:center;text-align:center;color:var(--mute);font-size:.85rem;pointer-events:none;padding:0 20px}
+@media(hover:hover){.col:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}.col.sel:hover{background:color-mix(in srgb,var(--stage) 16%,transparent)}}
+.chempty{position:absolute;left:40px;right:0;top:10px;bottom:22px;display:grid;place-items:center;text-align:center;color:var(--mute);font-size:.85rem;pointer-events:none;padding:0 20px}
 .chempty[hidden]{display:none}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.74rem;color:var(--mute);margin:10px 0 16px}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:.74rem;color:var(--mute);margin:10px 0 16px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:block;width:10px;height:10px;border-radius:3px}
 .lg-r{background:var(--stage)}
 .lg-s{background:repeating-linear-gradient(135deg,var(--stage) 0 3px,color-mix(in srgb,var(--stage) 30%,transparent) 3px 6px)}
-.lg-z{background:var(--mute);opacity:.6;height:4px!important;vertical-align:2px!important}
-@media(max-width:640px){#dayCard .plot{height:200px}.cols{gap:2px}}
+.lg-z{height:4px!important;background:var(--mute);opacity:.6}
+@media(max-width:640px){#dayCard .plot{height:210px}.dayinfo strong{font-size:1.35rem}}
+
+/* ===== touch: no tap highlight, no sticky selection ===== */
+*,*::before,*::after{-webkit-tap-highlight-color:transparent}
+button,.btn,.link,.col,.cbtn,.icon-btn,.quick button,.stat,label{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+:focus:not(:focus-visible){outline:none}
+
+/* ===== edit ===== */
+.acts{display:flex;gap:2px;flex:none}
+li button svg{display:block;width:15px;height:15px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(hover:hover){li button.ed:hover{color:var(--ink);border-color:var(--stage);background:color-mix(in srgb,var(--stage) 12%,transparent)}}
+#editDlg{max-width:380px}
+#editDlg h3{font-size:1.1rem;font-weight:900;margin-bottom:14px}
+#editDlg [hidden]{display:none!important}
 </style>
 </head>
 <body class="boot">
@@ -446,14 +463,14 @@ html[data-theme="light"] .t-ride .f,html[data-theme="light"] .t-span .f{box-shad
   <section class="card" id="dayCard">
     <h2>کارکرد روزانه</h2>
     <div class="chhead">
-      <button class="cbtn" id="chPrev" type="button" aria-label="ماه قبل">›</button>
+      <button class="cbtn" id="chPrev" type="button" aria-label="ماه قبل"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
       <div class="chtitle" id="chTitle"></div>
-      <button class="cbtn" id="chNext" type="button" aria-label="ماه بعد">‹</button>
+      <button class="cbtn" id="chNext" type="button" aria-label="ماه بعد"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
     </div>
     <div class="dayinfo" id="chInfo"><div><b id="diDate"></b><span id="diSub"></span></div><strong id="diVal"></strong></div>
     <div class="plot">
       <div class="gl" id="chGrid" aria-hidden="true"></div>
-      <div class="cols" id="chCols" role="list"></div>
+      <div class="cols" id="chCols"></div>
       <div class="chempty" id="chEmpty" hidden>با ثبت کیلومتر هر روز، نمودار اینجا ساخته می‌شود</div>
     </div>
     <div class="legend"><span><i class="lg-r"></i>روز رانندگی</span><span><i class="lg-s"></i>مجموع چند روز</span><span><i class="lg-z"></i>موتور روشن نشد</span></div>
@@ -572,6 +589,14 @@ html[data-theme="light"] .t-ride .f,html[data-theme="light"] .t-span .f{box-shad
   <div class="tools" style="margin-top:6px"><button class="btn ghost" id="onbBack" type="button">قبلی</button><button class="btn oil" id="onbNext" type="button" style="margin-top:0">بعدی</button></div>
   <button class="link" id="onbSkip" type="button" style="display:block;margin:10px auto 0">فعلا رد کن</button>
 </dialog>
+<dialog id="editDlg">
+  <h3 id="edTitle"></h3>
+  <div class="field" id="edKmF"><label for="edKm">کیلومتر</label><div class="inwrap"><input id="edKm" type="text" inputmode="numeric" data-num autocomplete="off"><em>KM</em></div></div>
+  <div class="field" style="margin-top:12px"><label id="edDateL">تاریخ</label><div class="jdate" id="edDate" role="group" aria-labelledby="edDateL"></div></div>
+  <div class="field" id="edCostF" style="margin-top:12px"><label for="edCost">هزینه (اختیاری)</label><div class="inwrap wide"><input id="edCost" type="text" inputmode="numeric" data-num autocomplete="off"><em>تومان</em></div></div>
+  <div class="err" id="edErr"></div>
+  <div class="tools" style="margin-top:6px"><button class="btn ghost" id="edNo" type="button">انصراف</button><button class="btn oil" id="edYes" type="button" style="margin-top:0">ذخیره</button></div>
+</dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="config.js"></script>
@@ -673,9 +698,9 @@ function chart(){
   $('chGrid').innerHTML=[0,1,2,3,4].map(k=>`<div data-v="${fa.format(step*k)}"></div>`).join('');
   const cols=$('chCols');cols.style.setProperty('--n',n);cols.className='cols'+(chAnim?' anim':'');
   cols.innerHTML=rows.map((x,i)=>{
-    const h=x.ty==='ride'||x.ty==='span'?Math.max(2,x.r.dist/top*100):0;
+    const p=x.ty==='ride'||x.ty==='span'?Math.min(1,x.r.dist/top):0;
     const lb=x.d===1||x.d===n||(x.d%5===0&&n-x.d>=2);
-    return `<button type="button" class="col t-${x.ty}${best&&x.ty==='ride'&&x.d===best.d?' best':''}${x.iso===t?' today':''}" data-d="${x.d}" style="--h:${h}%;--i:${i}" aria-label="${fn.format(x.d)} ${MONTHS[jm-1]}: ${dayText(x).v}"><i class="f"></i><u${lb?' class="lb"':''}>${fn.format(x.d)}</u></button>`}).join('');
+    return `<div role="button" tabindex="0" class="col t-${x.ty}${best&&x.ty==='ride'&&x.d===best.d?' best':''}${x.iso===t?' today':''}" data-d="${x.d}" style="--p:${p};--i:${i}" aria-label="${fn.format(x.d)} ${MONTHS[jm-1]}: ${dayText(x).v}"><i class="f"></i><u${lb?' class="lb"':''}>${fn.format(x.d)}</u></div>`}).join('');
   if(chAnim)setTimeout(()=>{chAnim=false;cols.classList.remove('anim')},1300);
   if(chSel==null||chSel>n){
     const cur=jy===tj[0]&&jm===tj[1],tr=cur&&rows[tj[2]-1];
@@ -696,6 +721,7 @@ function chart(){
 function chMove(k){let[y,m]=chJ;m+=k;if(m<1){m=12;y--}if(m>12){m=1;y++}chJ=[y,m];chSel=null;chAnim=true;chart()}
 $('chPrev').onclick=()=>chMove(-1);$('chNext').onclick=()=>chMove(1);
 $('chCols').addEventListener('click',e=>{const b=e.target.closest('.col');if(b){chSel=+b.dataset.d;showDay()}});
+$('chCols').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const b=e.target.closest('.col');if(b){e.preventDefault();chSel=+b.dataset.d;showDay()}}});
 
 let S={interval:1000,odo:[],oil:[],gear:[]};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
@@ -764,9 +790,13 @@ function list(id,arr,type,emptyMsg){
   [...arr].sort((a,b)=>b.date.localeCompare(a.date)||b.km-a.km).slice(0,30).forEach(x=>{
     const li=document.createElement('li');
     li.innerHTML=`<div><div class="km">${x.rest?'موتور روشن نشد':fa.format(x.km)+' KM'}</div><div class="d">${fmtDate(x.date)}${x.rest?` | ${fa.format(x.km)} KM`:''}${x.cost?` | ${fa.format(x.cost)} تومان`:''}</div></div>`;
-    const b=document.createElement('button');b.textContent='✕';b.setAttribute('aria-label','حذف');
-    b.onclick=()=>confirmDel(()=>{S[type]=S[type].filter(y=>y.id!==x.id);save();render()});
-    li.append(b);el.append(li);
+    const acts=document.createElement('div');acts.className='acts';
+    const e=document.createElement('button');e.className='ed';e.type='button';e.setAttribute('aria-label','ویرایش');
+    e.innerHTML='<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+    e.onclick=()=>editItem(type,x.id);
+    const b=document.createElement('button');b.type='button';b.textContent='✕';b.setAttribute('aria-label','حذف');
+    b.onclick=()=>confirmDel(()=>{S[type]=S[type].filter(y=>y.id!==x.id);if(type==='odo')fixRest();save();render()});
+    acts.append(e,b);li.append(acts);el.append(li);
   });
 }
 
@@ -776,6 +806,42 @@ function confirmDel(fn){
   $('dlgYes').onclick=()=>{$('dlg').close();fn()};
   $('dlgNo').onclick=()=>$('dlg').close();
 }
+
+function fixRest(){
+  [...S.odo].filter(x=>x.rest).sort((a,b)=>a.date.localeCompare(b.date)).forEach(r=>{
+    const base=S.odo.filter(x=>x!==r&&x.date<=r.date);if(base.length)r.km=Math.max(...base.map(x=>x.km))})}
+let edCtx=null;
+function editItem(type,id){
+  const it=S[type].find(x=>x.id===id);if(!it)return;edCtx={type,id};
+  $('edTitle').textContent={odo:'ویرایش کیلومتر',oil:'ویرایش تعویض روغن',gear:'ویرایش تعویض گیربکس'}[type];
+  $('edKmF').hidden=!!it.rest;$('edCostF').hidden=type==='odo';
+  setNum($('edKm'),it.km);setNum($('edCost'),it.cost||NaN);jdSet('edDate',it.date);$('edErr').textContent='';
+  $('editDlg').showModal();
+}
+$('edNo').onclick=()=>$('editDlg').close();
+$('edYes').onclick=()=>{
+  const c=edCtx,er=$('edErr'),it=c&&S[c.type].find(x=>x.id===c.id);
+  if(!it){$('editDlg').close();return}
+  const date=jdGet('edDate');let km=it.km;er.textContent='';
+  if(!it.rest){km=getNum($('edKm'));if(!Number.isFinite(km)){er.textContent='یک عدد معتبر برای کیلومتر وارد کن.';return}}
+  if(c.type==='odo'){
+    const o=S.odo.filter(x=>x.id!==it.id);
+    if(it.rest){
+      if(o.some(x=>x.date===date)){er.textContent='برای این روز قبلا کیلومتر ثبت شده است.';return}
+      const base=o.filter(x=>x.date<=date);
+      if(!base.length){er.textContent='این تاریخ قبل از اولین ثبت توست.';return}
+      km=Math.max(...base.map(x=>x.km));
+    }else{
+      const lo=Math.max(0,...o.filter(x=>x.date<=date).map(x=>x.km)),hi=Math.min(Infinity,...o.filter(x=>x.date>date).map(x=>x.km));
+      if(km<lo){er.textContent=`کیلومتر نمی‌تواند کمتر از مقدار ثبت‌شده‌ی قبلی (${fa.format(lo)}) باشد.`;return}
+      if(km>hi){er.textContent=`کیلومتر نمی‌تواند از مقدار روزهای بعد (${fa.format(hi)}) بیشتر باشد.`;return}
+    }
+  }
+  it.km=km;it.date=date;
+  if(c.type!=='odo')it.cost=getNum($('edCost'))||0;
+  if(c.type==='odo')fixRest();
+  save();render();$('editDlg').close();toast('تغییرات ذخیره شد');
+};
 
 function readForm(kmId,dateId,errId){
   const km=getNum($(kmId)), date=jdGet(dateId), err=$(errId);
@@ -844,7 +910,7 @@ $('themeBtn').onclick=()=>{
 };
 try{const t=localStorage.getItem(KEY+'-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
 
-initJD('kmDate');initJD('oilDate');jdSet('kmDate',todayISO());jdSet('oilDate',todayISO());
+initJD('kmDate');initJD('oilDate');initJD('edDate');jdSet('kmDate',todayISO());jdSet('oilDate',todayISO());
 render();
 
 // ---- polish: count-up, toast, tilt, intro ----
